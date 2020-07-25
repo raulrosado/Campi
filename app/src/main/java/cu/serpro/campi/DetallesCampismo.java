@@ -30,7 +30,7 @@ public class DetallesCampismo extends AppCompatActivity {
     ConexionSQLiteHelper conn;
     public String TAG = "CAMPILOG";
     public Integer idCampismo, ddonde;
-    public String nompreProvincia;
+    public String nompreProvincia,paramSearch;
     TextView titulo,ubicacion,descripcion,nov2,v2,nov3,v3,nov4,v4,nov5,v5,nov6,v6,nov7,v7,nov8,v8,textgalery;
     RecyclerView recyclerPhotos;
     ArrayList<Fotos> listaFotosCampismos;
@@ -48,6 +48,7 @@ public class DetallesCampismo extends AppCompatActivity {
         idCampismo = getIntent().getExtras().getInt("idCampismo");
         ddonde = getIntent().getExtras().getInt("ddonde");
         nompreProvincia = getIntent().getExtras().getString("nompreProvincia");
+        paramSearch = getIntent().getExtras().getString("paramSearch");
 
         imageView4 = findViewById(R.id.imageView4);
         imageView3 = findViewById(R.id.imageView3);
@@ -84,7 +85,10 @@ public class DetallesCampismo extends AppCompatActivity {
                 if(ddonde == 2){
                     intent = new Intent(getApplicationContext(), ShowProvincia.class);
                     intent.putExtra("nompreProvincia", nompreProvincia);
-                }else {
+                }else if(ddonde == 3){
+                    intent = new Intent(getApplicationContext(), Search.class);
+                    intent.putExtra("paramSearch", paramSearch);
+                }else{
                     intent = new Intent(getApplicationContext(), Principal.class);
                 }
                 startActivity(intent);

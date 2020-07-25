@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import cu.serpro.campi.entidades.Campismos;
 import cu.serpro.campi.entidades.Provincias;
@@ -28,6 +29,7 @@ public class Search extends AppCompatActivity {
     ConexionSQLiteHelper conn;
     ArrayList<Campismos> listaCampismos;
     EditText edtSearch;
+    public String paramSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,14 @@ public class Search extends AppCompatActivity {
         recyclerSearch = findViewById(R.id.recyclerSearch);
         //PARA MOSTRAR LAS VENTAS RAPIDAS
         recyclerSearch.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+
+        try {
+            paramSearch = getIntent().getExtras().getString("paramSearch");
+            if (paramSearch != null) {
+                loadCampismos(paramSearch);
+                edtSearch.setText(paramSearch);
+            }
+        }catch (Exception e){}
 
         imageView4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,11 +107,11 @@ public class Search extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(getApplicationContext(), "Seleccion. " + listaCampismos.get(recyclerSearch.getChildAdapterPosition(view)).getTitulo(), Toast.LENGTH_SHORT).show();
-//                    Intent i = new Intent(ShowProvincia.this, DetallesCampismo.class);
-//                    i.putExtra("idCampismo", listaCampismos.get(recyclerSearch.getChildAdapterPosition(view)).getId());
-//                    i.putExtra("ddonde", 2);
-//                    i.putExtra("nompreProvincia", nompreProvincia);
-//                    startActivity(i);
+                    Intent i = new Intent(Search.this, DetallesCampismo.class);
+                    i.putExtra("idCampismo", listaCampismos.get(recyclerSearch.getChildAdapterPosition(view)).getId());
+                    i.putExtra("ddonde", 3);
+                    i.putExtra("paramSearch", edtSearch.getText().toString());
+                    startActivity(i);
                     Log.d(TAG, listaCampismos.get(recyclerSearch.getChildAdapterPosition(view)).getId().toString());
                 }
             });
