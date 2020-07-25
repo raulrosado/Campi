@@ -71,6 +71,11 @@ public class Bienvenida extends AppCompatActivity {
         changeDir("doshermanas3.jpeg");
         changeDir("doshermanas4.jpeg");
         changeDir("lagunagrande.jpeg");
+        changeDir("lagunagrande1.jpeg");
+        changeDir("lagunagrande2.jpeg");
+        changeDir("lagunagrande3.jpeg");
+        changeDir("lagunagrande4.jpeg");
+        changeDir("lagunagrande5.jpeg");
         changeDir("pajarito.jpeg");
         changeDir("cuevaportales.jpeg");
         changeDir("cuevaportales1.jpeg");

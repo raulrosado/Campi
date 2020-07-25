@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,9 @@ class AdapterCampismosPopularesProvincia extends RecyclerView.Adapter<AdapterCam
             cargarImagenWebService(listaCampismos.get(position).getImagen(),holder);
         }
         holder.nombreCampismo.setText( listaCampismos.get(position).getTitulo());
+        holder.location.setVisibility(View.VISIBLE);
+        holder.ubicacion.setText( listaCampismos.get(position).getProvincia());
+
     }
 
     private void cargarImagenWebService(String nombreArchivo, final ViewHolderDatos viewHolderDatos) {
@@ -77,14 +81,17 @@ class AdapterCampismosPopularesProvincia extends RecyclerView.Adapter<AdapterCam
 
 
     public class ViewHolderDatos extends RecyclerView.ViewHolder {
-        TextView nombreCampismo;
+        TextView nombreCampismo,ubicacion;
         ImageView imagenCampismo,btnaccion;
+        LinearLayout location;
 
         public ViewHolderDatos(@NonNull View itemView) {
             super(itemView);
             nombreCampismo = (TextView) itemView.findViewById(R.id.nombreCampismo);
+            ubicacion = (TextView) itemView.findViewById(R.id.ubicacion);
             imagenCampismo = (ImageView) itemView.findViewById(R.id.imagenCampismo);
             btnaccion = (ImageView) itemView.findViewById(R.id.btnaccion);
+            location = (LinearLayout) itemView.findViewById(R.id.location);
         }
     }
 }

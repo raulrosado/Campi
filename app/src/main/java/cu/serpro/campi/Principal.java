@@ -56,7 +56,8 @@ public class Principal extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getApplicationContext(), Search.class);
+                startActivity(intent);
             }
         });
 
@@ -67,44 +68,12 @@ public class Principal extends AppCompatActivity {
         loadProvincias();
     }
 
-    private void loadProvincias(){
-        SQLiteDatabase db = conn.getReadableDatabase();
-        Provincias provincias = null;
-        listaProvincias = new ArrayList<Provincias>();
-        try {
-            Cursor cursor = db.rawQuery("SELECT * FROM " + utilidades.TABLA_PROVINCIAS , null);
-            while (cursor.moveToNext()) {
-                Log.d(TAG, cursor.getString(1));
-                provincias = new Provincias();
-                provincias.setId(cursor.getInt(0));
-                provincias.setNombre(cursor.getString(1));
-                provincias.setCantCamp(cursor.getString(2));
-                provincias.setImagen(cursor.getString(3));
-                listaProvincias.add(provincias);
-            }
-
-            AdapterProvincias adapterProvincias = new AdapterProvincias(listaProvincias, getApplicationContext());
-            adapterProvincias.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(), "Seleccion. " + listaProvincias.get(recyclerProvincias.getChildAdapterPosition(view)).getNombre(), Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(Principal.this, ShowProvincia.class);
-                    i.putExtra("nompreProvincia", listaProvincias.get(recyclerProvincias.getChildAdapterPosition(view)).getNombre());
-                    startActivity(i);
-                    Log.d(TAG, listaProvincias.get(recyclerProvincias.getChildAdapterPosition(view)).getNombre());
-                }
-            });
-            recyclerProvincias.setAdapter(adapterProvincias);
-        }catch (Exception e){}
-    }
-
     private void loadCampismos() {
         SQLiteDatabase db = conn.getReadableDatabase();
         Campismos campismos = null;
         listaCampismos = new ArrayList<Campismos>();
         try {
-            Cursor cursor = db.rawQuery("SELECT * FROM " + utilidades.TABLA_CAMPISMOS , null);
-//            Cursor cursor = db.rawQuery("SELECT * FROM " + utilidades.TABLA_CAMPISMOS +" WHERE "+ utilidades.Camp_categoria + "= '1'", null);
+            Cursor cursor = db.rawQuery("SELECT * FROM " + utilidades.TABLA_CAMPISMOS +" WHERE "+ utilidades.Camp_categoria + "= '1'", null);
             while (cursor.moveToNext()) {
                 Log.d(TAG, cursor.getString(1));
                 campismos = new Campismos();
@@ -137,6 +106,38 @@ public class Principal extends AppCompatActivity {
                 }
             });
             RecyclercampismoPopulares.setAdapter(adapterCampismosPopulares);
+        }catch (Exception e){}
+    }
+
+
+    private void loadProvincias(){
+        SQLiteDatabase db = conn.getReadableDatabase();
+        Provincias provincias = null;
+        listaProvincias = new ArrayList<Provincias>();
+        try {
+            Cursor cursor = db.rawQuery("SELECT * FROM " + utilidades.TABLA_PROVINCIAS , null);
+            while (cursor.moveToNext()) {
+                Log.d(TAG, cursor.getString(1));
+                provincias = new Provincias();
+                provincias.setId(cursor.getInt(0));
+                provincias.setNombre(cursor.getString(1));
+                provincias.setCantCamp(cursor.getString(2));
+                provincias.setImagen(cursor.getString(3));
+                listaProvincias.add(provincias);
+            }
+
+            AdapterProvincias adapterProvincias = new AdapterProvincias(listaProvincias, getApplicationContext());
+            adapterProvincias.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(), "Seleccion. " + listaProvincias.get(recyclerProvincias.getChildAdapterPosition(view)).getNombre(), Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(Principal.this, ShowProvincia.class);
+                    i.putExtra("nompreProvincia", listaProvincias.get(recyclerProvincias.getChildAdapterPosition(view)).getNombre());
+                    startActivity(i);
+                    Log.d(TAG, listaProvincias.get(recyclerProvincias.getChildAdapterPosition(view)).getNombre());
+                }
+            });
+            recyclerProvincias.setAdapter(adapterProvincias);
         }catch (Exception e){}
     }
 

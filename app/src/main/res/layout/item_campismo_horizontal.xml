@@ -31,28 +31,62 @@
                 android:layout_marginBottom="10dp"
                 android:padding="10dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/nombreCampismo"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.9"
-                    android:layout_marginRight="3dp"
-                    android:text="Nombre Campismo"
-                    android:textColor="#FFF"
-                    android:textSize="20dp" />
+                    android:padding="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/btnaccion"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    <TextView
+                        android:id="@+id/nombreCampismo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.9"
+                        android:layout_marginRight="3dp"
+                        android:text="Nombre Campismo"
+                        android:textColor="#fff"
+                        android:textSize="20dp" />
+
+                    <ImageView
+                        android:id="@+id/btnaccion"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:visibility="gone"
+                        android:background="@drawable/cornerbtnblue"
+                        android:tint="#FFF"
+                        app:srcCompat="@drawable/ic_chevron_right_black_24dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:visibility="gone"
-                    android:background="@drawable/cornerbtnblue"
-                    android:tint="#FFF"
-                    app:srcCompat="@drawable/ic_chevron_right_black_24dp" />
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:id="@+id/btnaccion"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:visibility="visible"
+                        android:tint="#fff"
+                        app:srcCompat="@drawable/ic_location_on_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/ubicacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pinar del Rio"
+                        android:textColor="#fff"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
             </LinearLayout>
+
+
 
 
         </RelativeLayout>
