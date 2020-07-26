@@ -1,7 +1,6 @@
 package cu.serpro.campi;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -19,22 +18,23 @@ import java.io.IOException;
 import java.util.List;
 
 import cu.serpro.campi.entidades.Campismos;
+import cu.serpro.campi.entidades.Servicios;
 
-class AdapterCampismosPopulares extends RecyclerView.Adapter<AdapterCampismosPopulares.ViewHolderDatos> implements View.OnClickListener{
-    List<Campismos> listaCampismos;
+class AdapterCampismosServicios extends RecyclerView.Adapter<AdapterCampismosServicios.ViewHolderDatos> implements View.OnClickListener{
+    List<Servicios> listaServicios;
     Context context;
     private View.OnClickListener listener;
     ConexionSQLiteHelper conn;      //conexion a la bd
 
-    public AdapterCampismosPopulares(List<Campismos> listaCampismos, Context context){
-        this.listaCampismos = listaCampismos;
+    public AdapterCampismosServicios(List<Servicios> listaServicios, Context context){
+        this.listaServicios = listaServicios;
         this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolderDatos onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_campismo_popular,null,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_servisios,null,false);
         RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(layoutParams);
         view.setOnClickListener(this);
@@ -43,11 +43,10 @@ class AdapterCampismosPopulares extends RecyclerView.Adapter<AdapterCampismosPop
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderDatos holder, int position) {
-        if(listaCampismos.get(position).getImagen() != null){
-            cargarImagenWebService(listaCampismos.get(position).getImagen(),holder);
+        if(listaServicios.get(position).getImagen() != null){
+            cargarImagenWebService(listaServicios.get(position).getImagen(),holder);
         }
-        holder.nombreCampismo.setText( listaCampismos.get(position).getTitulo());
-        holder.ubicacion.setText( listaCampismos.get(position).getMunicipio() +", "+listaCampismos.get(position).getProvincia() );
+        Log.d("CAMPILOG", listaServicios.get(position).getImagen());
     }
 
     private void cargarImagenWebService(String nombreArchivo, final ViewHolderDatos viewHolderDatos) {
@@ -58,12 +57,12 @@ class AdapterCampismosPopulares extends RecyclerView.Adapter<AdapterCampismosPop
         }catch (IOException e){
             e.printStackTrace();
         }
-        viewHolderDatos.imagenCampismo.setImageBitmap(bitmap);           ///SE LE PASA EL BITMAP A LA IMAGEN
+        viewHolderDatos.imgservice.setImageBitmap(bitmap);           ///SE LE PASA EL BITMAP A LA IMAGEN
     }
 
     @Override
     public int getItemCount() {
-        return listaCampismos.size();
+        return listaServicios.size();
     }
 
     public void setOnClickListener(View.OnClickListener listener){
@@ -78,15 +77,11 @@ class AdapterCampismosPopulares extends RecyclerView.Adapter<AdapterCampismosPop
     }
 
     public class ViewHolderDatos extends RecyclerView.ViewHolder {
-        TextView nombreCampismo,ubicacion;
-        ImageView imagenCampismo,btnaccion;
+        ImageView imgservice;
 
         public ViewHolderDatos(@NonNull View itemView) {
             super(itemView);
-            nombreCampismo = (TextView) itemView.findViewById(R.id.nombreCampismo);
-            ubicacion = (TextView) itemView.findViewById(R.id.ubicacion);
-            imagenCampismo = (ImageView) itemView.findViewById(R.id.imagenCampismo);
-            btnaccion = (ImageView) itemView.findViewById(R.id.btnaccion);
+            imgservice = (ImageView) itemView.findViewById(R.id.imgservice);
         }
     }
 }

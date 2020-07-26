@@ -1,6 +1,7 @@
 package cu.serpro.campi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,11 +19,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import cu.serpro.campi.entidades.Campismos;
 import cu.serpro.campi.entidades.Fotos;
+import cu.serpro.campi.entidades.Servicios;
 import cu.serpro.campi.utilidades.utilidades;
 
 public class DetallesCampismo extends AppCompatActivity {
@@ -32,8 +37,9 @@ public class DetallesCampismo extends AppCompatActivity {
     public Integer idCampismo, ddonde;
     public String nompreProvincia,paramSearch;
     TextView titulo,ubicacion,descripcion,nov2,v2,nov3,v3,nov4,v4,nov5,v5,nov6,v6,nov7,v7,nov8,v8,textgalery;
-    RecyclerView recyclerPhotos;
+    RecyclerView recyclerPhotos,recyclerServisios;
     ArrayList<Fotos> listaFotosCampismos;
+    ArrayList<Servicios> listaServicios;
     LinearLayout listadosPrecios;
     TextView txtphone;
 
@@ -75,8 +81,10 @@ public class DetallesCampismo extends AppCompatActivity {
         v8 = findViewById(R.id.v8);
 
         recyclerPhotos = findViewById(R.id.recyclerPhotos);
+        recyclerServisios = findViewById(R.id.recyclerServisios);
         //PARA MOSTRAR LAS VENTAS RAPIDAS
         recyclerPhotos.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        recyclerServisios.setLayoutManager(new GridLayoutManager(this, 4));
 
         imageView4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +113,32 @@ public class DetallesCampismo extends AppCompatActivity {
                 ubicacion.setText(cursor.getString(6) + " - "+ cursor.getString(7));
                 descripcion.setText(cursor.getString(2));
 
+//****************************************************
+                String[] servicios = cursor.getString(8).split("/");
+                Log.d(TAG,"servicios: "+ cursor.getString(8) + "/ cantidad: " + servicios.length + "/ primero: "+ servicios[1].toString());
+
+                Servicios servicios1 = null;
+                listaServicios = new ArrayList<Servicios>();
+
+                for(Integer i=0; i < servicios.length; i++){
+                    Log.d(TAG, servicios[i]);
+                    servicios1 = new Servicios();
+                    servicios1.setImagen(servicios[i]);
+                    listaServicios.add(servicios1);
+                    changeDir(servicios[i].toString());
+                }
+
+                AdapterCampismosServicios adapterCampismosServicios = new AdapterCampismosServicios(listaServicios, getApplicationContext());
+                adapterCampismosServicios.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getApplicationContext(), "Seleccion. " + listaServicios.get(recyclerServisios.getChildAdapterPosition(view)).getImagen(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                recyclerServisios.setAdapter(adapterCampismosServicios);
+
+                //****************************************************
+
                 if(cursor.getString(5) == null){
                     txtphone.setText("Sin telefono");
                 }else {
@@ -130,6 +164,26 @@ public class DetallesCampismo extends AppCompatActivity {
         //cargo las fotos
         loadPhotosCampismos();
 
+    }
+
+    public void changeDir(String namefile){
+        InputStream origen = null;
+        try {
+            origen = getAssets().open(namefile);
+            OutputStream destino = new FileOutputStream(getApplicationContext().getFilesDir().getPath() +  "/" + namefile );
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = origen.read(buffer)) > 0) {
+                destino.write(buffer, 0, length);
+            }
+            origen.close();
+            destino.flush();
+            destino.close();
+            Log.i(TAG, "Se copio el archivo...");
+        } catch (IOException e) {
+            Log.e(TAG, "No se pudo copiar...");
+            e.printStackTrace();
+        }
     }
 
     public void loadPreciosNV(Integer idCampismo){
@@ -175,15 +229,12 @@ public class DetallesCampismo extends AppCompatActivity {
         listaFotosCampismos = new ArrayList<Fotos>();
         try {
             Cursor cursor = db.rawQuery("SELECT * FROM " + utilidades.TABLA_FOTOS +" WHERE "+ utilidades.Id_foto_idcampismo + "= '"+idCampismo+"'", null);
-            Log.d(TAG, "cantidad de fotos:"+ cursor.getCount());
-
             if(cursor.getCount() == 0){
                 textgalery.setVisibility(View.GONE);
                 recyclerPhotos.setVisibility(View.GONE);
             }
 
             while (cursor.moveToNext()) {
-                Log.d(TAG, cursor.getString(1));
                 fotos = new Fotos();
                 fotos.setId(cursor.getInt(0));
                 fotos.setIdcampismo(cursor.getInt(1));
@@ -195,11 +246,8 @@ public class DetallesCampismo extends AppCompatActivity {
             adapterFotosCampismos.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(), "Seleccion. " + listaFotosCampismos.get(recyclerPhotos.getChildAdapterPosition(view)).getNombre(), Toast.LENGTH_SHORT).show();
-//                    Intent i = new Intent(DetallesCampismo.this, DetallesCampismo.class);
-//                    i.putExtra("idCampismo", listaFotosCampismos.get(recyclerPhotos.getChildAdapterPosition(view)).getId());
-//                    startActivity(i);
-                    Log.d(TAG, listaFotosCampismos.get(recyclerPhotos.getChildAdapterPosition(view)).getId().toString());
+//                    Toast.makeText(getApplicationContext(), "Seleccion. " + listaFotosCampismos.get(recyclerPhotos.getChildAdapterPosition(view)).getNombre(), Toast.LENGTH_SHORT).show();
+//                    Log.d(TAG, listaFotosCampismos.get(recyclerPhotos.getChildAdapterPosition(view)).getId().toString());
                 }
             });
             recyclerPhotos.setAdapter(adapterFotosCampismos);

@@ -376,7 +376,6 @@
                 </HorizontalScrollView>
                 </LinearLayout>
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -392,6 +391,25 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerPhotos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textServicios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Servicios" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerServisios"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
 

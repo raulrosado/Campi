@@ -2,6 +2,9 @@ package cu.serpro.campi.utilidades;
 
 public class utilidades {
 
+    public static final Integer grid = 2;
+
+
     public static final String TABLA_CAMPISMOS = "campismos";
     public static final String Id_campismos = "id";
     public static final String Camp_titulo = "titulo";

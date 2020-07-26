@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class Bienvenida extends AppCompatActivity {
     public String TAG = "CAMPILOG";
     Intent i;
     Button button;
+    ImageView imageView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class Bienvenida extends AppCompatActivity {
         getSupportActionBar().hide();
 
         button = findViewById(R.id.button);
+        imageView2 = findViewById(R.id.imageView2);
 
         InputStream origen = null;
         try {

@@ -73,6 +73,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
+            <TextView
+                android:id="@+id/nohay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No hay resultados de la busqueda"
+                android:visibility="gone"
+                android:gravity="center_horizontal"
+                />
+
         </LinearLayout>
     </ScrollView>
 

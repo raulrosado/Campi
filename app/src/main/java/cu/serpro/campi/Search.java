@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class Search extends AppCompatActivity {
     ConexionSQLiteHelper conn;
     ArrayList<Campismos> listaCampismos;
     EditText edtSearch;
+    TextView nohay;
     public String paramSearch;
 
     @Override
@@ -39,6 +41,7 @@ public class Search extends AppCompatActivity {
         //hago la coneccion con la BD
         conn = new ConexionSQLiteHelper(getApplicationContext());
 
+        nohay = findViewById(R.id.nohay);
         imageView4 = findViewById(R.id.imageView4);
         btnSearch = findViewById(R.id.btnSearch);
         edtSearch = findViewById(R.id.edtSearch);
@@ -82,6 +85,12 @@ public class Search extends AppCompatActivity {
         try {
             Cursor cursor = db.rawQuery("SELECT * FROM " + utilidades.TABLA_CAMPISMOS +" WHERE "+ utilidades.Camp_titulo + " LIKE '%"+ search +"%'", null);
             Log.d(TAG, "busqueda: "+search +" / cantidad de resultados: "+ cursor.getCount());
+            if(cursor.getCount() == 0)
+            {
+                nohay.setVisibility(View.VISIBLE);
+            }else{
+                nohay.setVisibility(View.GONE);
+            }
             while (cursor.moveToNext()) {
                 Log.d(TAG, cursor.getString(1));
                 campismos = new Campismos();
