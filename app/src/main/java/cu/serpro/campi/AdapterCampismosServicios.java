@@ -46,7 +46,7 @@ class AdapterCampismosServicios extends RecyclerView.Adapter<AdapterCampismosSer
         if(listaServicios.get(position).getImagen() != null){
             cargarImagenWebService(listaServicios.get(position).getImagen(),holder);
         }
-        Log.d("CAMPILOG", listaServicios.get(position).getImagen());
+        //Log.d("CAMPILOG", listaServicios.get(position).getImagen());
     }
 
     private void cargarImagenWebService(String nombreArchivo, final ViewHolderDatos viewHolderDatos) {

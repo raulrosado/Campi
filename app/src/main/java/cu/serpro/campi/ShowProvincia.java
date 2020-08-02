@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +26,9 @@ public class ShowProvincia extends AppCompatActivity {
     ArrayList<Campismos> listaCampismos;
     public String TAG = "CAMPILOG";
     public String nompreProvincia;
-    TextView textView;
+    TextView textView,nombreOficina,emailOficina,telefonoOficina,ubicacionOficina,direccionOficina;
     ImageView imageView4;
+    LinearLayout oficina;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,13 @@ public class ShowProvincia extends AppCompatActivity {
         imageView4 = findViewById(R.id.imageView4);
         nompreProvincia = getIntent().getExtras().getString("nompreProvincia");
 
+        nombreOficina = findViewById(R.id.nombreOficina);
+        emailOficina = findViewById(R.id.emailOficina);
+        telefonoOficina = findViewById(R.id.telefonoOficina);
+        ubicacionOficina = findViewById(R.id.ubicacionOficina);
+        direccionOficina = findViewById(R.id.direccionOficina);
+        oficina = findViewById(R.id.oficina);
+
         textView = findViewById(R.id.textView);
         textView.setText(nompreProvincia);
 
@@ -47,6 +56,9 @@ public class ShowProvincia extends AppCompatActivity {
         recyclerCampismosProvincias.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         //cargo los campismos
         loadCampismos();
+
+        //cargo la informacion de la oficina
+        loadInfoOficina();
 
         imageView4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +68,26 @@ public class ShowProvincia extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void loadInfoOficina() {
+        SQLiteDatabase db2 = conn.getReadableDatabase();
+        try {
+            Cursor cursor2 = db2.rawQuery("SELECT * FROM " + utilidades.TABLA_OFICINAS + " WHERE `provincia` = '"+nompreProvincia+"' ", null);
+            Log.d(TAG, "cantidad info oficina "+ cursor2.getCount() + "/ provincia: "+nompreProvincia);
+
+            if(cursor2.getCount() == 0){
+                oficina.setVisibility(View.GONE);
+            }else{
+                while (cursor2.moveToNext()) {
+                    nombreOficina.setText(cursor2.getString(1));
+                    emailOficina.setText("Email: "+ cursor2.getString(4));
+                    telefonoOficina.setText("Telefono: "+ cursor2.getString(5));
+                    ubicacionOficina.setText("Ubicacion: "+ cursor2.getString(3));
+                    direccionOficina.setText("Dirección:" + cursor2.getString(6));
+                }
+            }
+        }catch (Exception e){}
     }
 
     private void loadCampismos() {
@@ -99,4 +131,6 @@ public class ShowProvincia extends AppCompatActivity {
             recyclerCampismosProvincias.setAdapter(adapterCampismosPopulares);
         }catch (Exception e){}
     }
+
+
 }

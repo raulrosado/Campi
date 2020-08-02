@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -48,6 +49,7 @@ public class DetallesCampismo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalles_campismo);
         getSupportActionBar().hide();
+
         //hago la coneccion con la BD
         conn = new ConexionSQLiteHelper(getApplicationContext());
 
@@ -64,6 +66,7 @@ public class DetallesCampismo extends AppCompatActivity {
         textgalery = findViewById(R.id.textgalery);
         listadosPrecios = findViewById(R.id.listadosPrecios);
         txtphone = findViewById(R.id.txtphone);
+
 
         nov2 = findViewById(R.id.nov2);
         v2 = findViewById(R.id.v2);
@@ -96,13 +99,14 @@ public class DetallesCampismo extends AppCompatActivity {
                 }else if(ddonde == 3){
                     intent = new Intent(getApplicationContext(), Search.class);
                     intent.putExtra("paramSearch", paramSearch);
+                }else  if(ddonde == 6){
+                    intent = new Intent(getApplicationContext(), MapsActivity.class);
                 }else{
                     intent = new Intent(getApplicationContext(), Principal.class);
                 }
                 startActivity(intent);
             }
         });
-
 
         SQLiteDatabase db = conn.getReadableDatabase();
         try {
@@ -113,26 +117,49 @@ public class DetallesCampismo extends AppCompatActivity {
                 ubicacion.setText(cursor.getString(6) + " - "+ cursor.getString(7));
                 descripcion.setText(cursor.getString(2));
 
+                String local = cursor.getString(4);
+
+                ubicacion.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent verenmapa = new Intent(getApplicationContext(), MapsActivity.class);
+                        verenmapa.putExtra("localizacionDefault", local);
+                        startActivity(verenmapa);
+                    }
+                });
+
 //****************************************************
                 String[] servicios = cursor.getString(8).split("/");
-                Log.d(TAG,"servicios: "+ cursor.getString(8) + "/ cantidad: " + servicios.length + "/ primero: "+ servicios[1].toString());
+               // Log.d(TAG,"servicios: "+ cursor.getString(8) + "/ cantidad: " + servicios.length + "/ primero: "+ servicios[1].toString());
 
                 Servicios servicios1 = null;
                 listaServicios = new ArrayList<Servicios>();
+                String nombreS="";
 
                 for(Integer i=0; i < servicios.length; i++){
                     Log.d(TAG, servicios[i]);
                     servicios1 = new Servicios();
+
+                    SQLiteDatabase db2 = conn.getReadableDatabase();
+                    Cursor cursor2 = db.rawQuery("SELECT * FROM " + utilidades.TABLA_SERVICIOS + " WHERE "+ utilidades.Serv_imagen + " = '"+ servicios[i] +"'" , null);
+                    //Log.d(TAG, "cantidad servicio: " + cursor2.getCount());
+                        while (cursor2.moveToNext()) {
+                            //Log.d(TAG, "nombre servisio" + cursor2.getString(1));
+                            nombreS = cursor2.getString(1);
+                        }
+
+                    servicios1.setNombreservicio(nombreS);
                     servicios1.setImagen(servicios[i]);
                     listaServicios.add(servicios1);
                     changeDir(servicios[i].toString());
+
                 }
 
                 AdapterCampismosServicios adapterCampismosServicios = new AdapterCampismosServicios(listaServicios, getApplicationContext());
                 adapterCampismosServicios.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getApplicationContext(), "Seleccion. " + listaServicios.get(recyclerServisios.getChildAdapterPosition(view)).getImagen(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), listaServicios.get(recyclerServisios.getChildAdapterPosition(view)).getNombreservicio(), Toast.LENGTH_SHORT).show();
                     }
                 });
                 recyclerServisios.setAdapter(adapterCampismosServicios);
@@ -242,7 +269,7 @@ public class DetallesCampismo extends AppCompatActivity {
                 listaFotosCampismos.add(fotos);
             }
 
-            AdapterFotosCampismos adapterFotosCampismos = new AdapterFotosCampismos(listaFotosCampismos, getApplicationContext());
+            AdapterFotosCampismos adapterFotosCampismos = new AdapterFotosCampismos(listaFotosCampismos, getApplicationContext(),DetallesCampismo.this);
             adapterFotosCampismos.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

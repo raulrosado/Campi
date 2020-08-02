@@ -1,5 +1,7 @@
 package cu.serpro.campi;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.chrisbanes.photoview.PhotoView;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
@@ -27,10 +31,12 @@ class AdapterFotosCampismos extends RecyclerView.Adapter<AdapterFotosCampismos.V
     Context context;
     private View.OnClickListener listener;
     ConexionSQLiteHelper conn;      //conexion a la bd
+    final Dialog dialog;
 
-    public AdapterFotosCampismos(List<Fotos> listaFotosCampismos, Context context){
+    public AdapterFotosCampismos(List<Fotos> listaFotosCampismos, Context context, Activity actividad){
         this.listaFotosCampismos = listaFotosCampismos;
         this.context = context;
+        dialog = new Dialog(actividad);
     }
 
     @NonNull
@@ -48,6 +54,29 @@ class AdapterFotosCampismos extends RecyclerView.Adapter<AdapterFotosCampismos.V
         if(listaFotosCampismos.get(position).getNombre() != null){
             cargarImagenWebService(listaFotosCampismos.get(position).getNombre(),holder);
         }
+
+        holder.photosCampismos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               mostrardialog(listaFotosCampismos.get(position).getNombre());
+            }
+        });
+    }
+
+    private void mostrardialog(String nombreArchivo) {
+        dialog.setContentView(R.layout.dialog_imagen);
+        PhotoView imageView = dialog.findViewById(R.id.imagenAmpliada);
+
+        Bitmap bitmap = null;
+        try{
+            FileInputStream fileInputStream = new FileInputStream(context.getFilesDir().getPath() + "/" + nombreArchivo);
+            bitmap = BitmapFactory.decodeStream(fileInputStream);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        imageView.setImageBitmap(bitmap);           ///SE LE PASA EL BITMAP A LA IMAGEN
+        dialog.show();
+
     }
 
     private void cargarImagenWebService(String nombreArchivo, final ViewHolderDatos viewHolderDatos) {

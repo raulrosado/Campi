@@ -82,9 +82,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="1"
-                        android:textColor="#6C6B6B"
+                        android:textColor="#3939FF"
                         android:text="Pinar del Rio" />
+
+
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

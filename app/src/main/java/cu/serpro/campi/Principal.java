@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class Principal extends AppCompatActivity {
     private static final int PICK_IMAGE = 0;
-    ImageView imageView;
+    ImageView imageView,location;
     ConexionSQLiteHelper conn;
     public String TAG = "CAMPILOG";
     RecyclerView RecyclercampismoPopulares,recyclerProvincias;
@@ -44,6 +44,7 @@ public class Principal extends AppCompatActivity {
         getSupportActionBar().hide();
 
         imageView = findViewById(R.id.imageView);
+        location = findViewById(R.id.location);
         RecyclercampismoPopulares = findViewById(R.id.campismoPopulares);
         recyclerProvincias = findViewById(R.id.recyclerProvincias);
         //PARA MOSTRAR LAS VENTAS RAPIDAS
@@ -53,6 +54,13 @@ public class Principal extends AppCompatActivity {
         //hago la coneccion con la BD
         conn = new ConexionSQLiteHelper(getApplicationContext());
 
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(intent);
+            }
+        });
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,17 +106,16 @@ public class Principal extends AppCompatActivity {
             adapterCampismosPopulares.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(), "Seleccion. " + listaCampismos.get(RecyclercampismoPopulares.getChildAdapterPosition(view)).getTitulo(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Seleccion. " + listaCampismos.get(RecyclercampismoPopulares.getChildAdapterPosition(view)).getTitulo(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(Principal.this, DetallesCampismo.class);
                     i.putExtra("idCampismo", listaCampismos.get(RecyclercampismoPopulares.getChildAdapterPosition(view)).getId());
                     startActivity(i);
-                    Log.d(TAG, listaCampismos.get(RecyclercampismoPopulares.getChildAdapterPosition(view)).getId().toString());
+                    //Log.d(TAG, listaCampismos.get(RecyclercampismoPopulares.getChildAdapterPosition(view)).getId().toString());
                 }
             });
             RecyclercampismoPopulares.setAdapter(adapterCampismosPopulares);
         }catch (Exception e){}
     }
-
 
     private void loadProvincias(){
         SQLiteDatabase db = conn.getReadableDatabase();
