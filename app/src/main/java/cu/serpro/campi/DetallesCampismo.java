@@ -32,7 +32,7 @@ import cu.serpro.campi.entidades.Servicios;
 import cu.serpro.campi.utilidades.utilidades;
 
 public class DetallesCampismo extends AppCompatActivity {
-    ImageView imageView4,imageView3;
+    ImageView imageView4,imageView3,favorite;
     ConexionSQLiteHelper conn;
     public String TAG = "CAMPILOG";
     public Integer idCampismo, ddonde;
@@ -42,7 +42,9 @@ public class DetallesCampismo extends AppCompatActivity {
     ArrayList<Fotos> listaFotosCampismos;
     ArrayList<Servicios> listaServicios;
     LinearLayout listadosPrecios;
-    TextView txtphone;
+    TextView txtphone,categoria,tipoturismo;
+
+    Integer sfavorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,10 @@ public class DetallesCampismo extends AppCompatActivity {
         textgalery = findViewById(R.id.textgalery);
         listadosPrecios = findViewById(R.id.listadosPrecios);
         txtphone = findViewById(R.id.txtphone);
+        favorite = findViewById(R.id.favorite);
+
+        categoria = findViewById(R.id.categoria);
+        tipoturismo = findViewById(R.id.tipoturismo);
 
 
         nov2 = findViewById(R.id.nov2);
@@ -108,6 +114,23 @@ public class DetallesCampismo extends AppCompatActivity {
             }
         });
 
+        favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(sfavorite == 1) {
+                    conn.addfavorite(idCampismo);
+                    favorite.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    Log.d(TAG, "add");
+                    sfavorite = 2;
+                }else{
+                    conn.remfavorite(idCampismo);
+                    favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    Log.d(TAG, "rem");
+                    sfavorite = 1;
+                }
+            }
+        });
+
         SQLiteDatabase db = conn.getReadableDatabase();
         try {
             Cursor cursor = db.rawQuery("SELECT * FROM " + utilidades.TABLA_CAMPISMOS + " WHERE "+ utilidades.Id_campismos + " = '"+ idCampismo +"'", null);
@@ -116,6 +139,16 @@ public class DetallesCampismo extends AppCompatActivity {
                 titulo.setText(cursor.getString(1));
                 ubicacion.setText(cursor.getString(6) + " - "+ cursor.getString(7));
                 descripcion.setText(cursor.getString(2));
+                categoria.setText("Categoria: " +cursor.getString(9));
+                tipoturismo.setText("Categoria: " +cursor.getString(10));
+
+                sfavorite = cursor.getInt(13);
+
+                if(cursor.getInt(13) == 2){
+                    favorite.setImageResource(R.drawable.ic_favorite_black_24dp);
+                }else{
+                    favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                }
 
                 String local = cursor.getString(4);
 
@@ -159,7 +192,7 @@ public class DetallesCampismo extends AppCompatActivity {
                 adapterCampismosServicios.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getApplicationContext(), listaServicios.get(recyclerServisios.getChildAdapterPosition(view)).getNombreservicio(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), listaServicios.get(recyclerServisios.getChildAdapterPosition(view)).getNombreservicio(), Toast.LENGTH_SHORT).show();
                     }
                 });
                 recyclerServisios.setAdapter(adapterCampismosServicios);

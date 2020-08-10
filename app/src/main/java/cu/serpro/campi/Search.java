@@ -115,7 +115,7 @@ public class Search extends AppCompatActivity {
             adapterCampismosPopulares.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(), "Seleccion. " + listaCampismos.get(recyclerSearch.getChildAdapterPosition(view)).getTitulo(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getApplicationContext(), "Seleccion. " + listaCampismos.get(recyclerSearch.getChildAdapterPosition(view)).getTitulo(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(Search.this, DetallesCampismo.class);
                     i.putExtra("idCampismo", listaCampismos.get(recyclerSearch.getChildAdapterPosition(view)).getId());
                     i.putExtra("ddonde", 3);

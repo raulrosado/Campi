@@ -68,7 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         try {
             localizacionDefault = getIntent().getExtras().getString("localizacionDefault");
-
+            Log.d(TAG, localizacionDefault);
         }catch (Exception e){}
 
     }
@@ -95,35 +95,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         SQLiteDatabase db = conn.getReadableDatabase();
         try {
-            Cursor cursor = db.rawQuery("SELECT * FROM " + utilidades.TABLA_CAMPISMOS, null);
-
+            Cursor cursor = db.rawQuery("SELECT * FROM " + utilidades.TABLA_CAMPISMOS , null);
             String[] coord = null;
             LatLng position = null;
             while (cursor.moveToNext()) {
-                Log.d(TAG, cursor.getString(1));
-                //cursor.getString(1); //titulo
+//                Log.d(TAG, cursor.getPosition() +"/"+ cursor.getString(1) + "/" + cursor.getString(4).toString()); //titulo
                 coord = cursor.getString(4).toString().split(","); //localizacion
-
                 position = new LatLng(Double.parseDouble(coord[0]), Double.parseDouble(coord[1]));
-                mMap.addMarker(new MarkerOptions().position(position).title(cursor.getString(1)));
-
+                 mMap.addMarker(new MarkerOptions().position(position).title(cursor.getString(1)));
             }
 
-            Log.d(TAG, "localizacion: " + localizacionDefault);
-            if(localizacionDefault != null){
-                String[] coord2 = localizacionDefault.toString().split(","); //localizacion
-
-                LatLng position2;
-                position2 = new LatLng(Double.parseDouble(coord2[0]), Double.parseDouble(coord2[1]));
-                //mMap.addMarker(new MarkerOptions().position(position).title(cursor.getString(1)));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position2,13));
-
-            }else{
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,13));
-            }
-
-            mMap.getUiSettings().setMapToolbarEnabled(true);
+            //mMap.getUiSettings().setMapToolbarEnabled(true);
         }catch (Exception e){}
+
+        LatLng cuba = new LatLng(21.4086958,-79.5822557);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cuba,6));
+
+        Log.d(TAG, "localizacion: " + localizacionDefault);
+
+        if(localizacionDefault != null){
+            String[] coord2 = localizacionDefault.toString().split(","); //localizacion
+
+            LatLng position2;
+            position2 = new LatLng(Double.parseDouble(coord2[0]), Double.parseDouble(coord2[1]));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position2,13));
+        }else{
+
+        }
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             public boolean onMarkerClick(Marker marker) {
@@ -188,7 +186,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return true;
             }
         });
-
         mMap.setMyLocationEnabled(true);
 
 //        mMap.setMapStyle(

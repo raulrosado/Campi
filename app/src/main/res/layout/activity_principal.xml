@@ -4,99 +4,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:gravity="top"
-    android:layout_gravity="top"
     tools:context=".Principal">
 
-    <ScrollView
+    <include layout="@layout/top_bar"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/cardstyle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
-        <LinearLayout
+        android:layout_height="match_parent">
+        
+       <!-- <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="70dp">
+
+        </LinearLayout>-->
+
+        <ScrollView
+            android:paddingTop="15dp"
+            android:paddingBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
+
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.9"
-                    android:text="Explorar"
-                    android:textSize="35dp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="0.1"
-                    app:srcCompat="@drawable/ic_search_black_24dp"
-                    tools:ignore="VectorDrawableCompat" />
-                <ImageView
-                    android:id="@+id/location"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="0.1"
-                    app:srcCompat="@drawable/ic_location_on_black_24dp"
-                    tools:ignore="VectorDrawableCompat" />
-            </LinearLayout>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#333"
-                android:text="1ra Categoria"
-                android:textSize="18dp"
-                android:layout_marginTop="10dp"
-                />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginTop="10dp"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/campismoPopulares"
+                <!--<LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical"
-                >
+                    &lt;!&ndash;<TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.9"
+                        android:text="Campi"
+                        android:textSize="35dp"
+                        android:fontFamily="@font/calibrib"
+                        android:textStyle="bold" />&ndash;&gt;
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="0.1"
+                        app:srcCompat="@drawable/ic_search_black_24dp"
+                        tools:ignore="VectorDrawableCompat" />
+                    <ImageView
+                        android:id="@+id/location"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="0.1"
+                        app:srcCompat="@drawable/ic_location_on_black_24dp"
+                        tools:ignore="VectorDrawableCompat" />
+                </LinearLayout>-->
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerFavoritos"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"/>
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
-                    android:text="Provincias"
+                    android:text="Más vistos"
+                    android:textColor="#333"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="15dp"
                     android:textSize="25dp"
+                    android:fontFamily="@font/calibrib"
                     android:textStyle="bold" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerProvincias"
+                <LinearLayout
+                    android:layout_margin="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/campismoPopulares"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.9"
+                        android:text="Provincias"
+                        android:textColor="#333"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="15dp"
+                        android:textSize="25dp"
+                        android:fontFamily="@font/calibrib"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerProvincias"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
 </LinearLayout>

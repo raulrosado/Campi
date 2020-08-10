@@ -1,9 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ffc501</color>
-    <color name="colorPrimaryDark">#D8A700</color>
+    <color name="colorPrimary">@color/verde_g</color>
+    <color name="colorPrimaryDark">@color/verde_g</color>
     <color name="colorAccent">#2196F3</color>
     <color name="gris">#CDCDCD</color>
     <color name="red">#FF0000</color>
     <color name="bluedark">#020070</color>
+
+    <color name="light_font">#FBFBFB</color>
+    <color name="grey_font">#ff9e9e9e</color>
+    <color name="text_shadow">#7F000000</color>
+    <color name="text_shadow_white">#ff9e9e9e</color>
+
+    <color name="transparente">@android:color/transparent</color>
+    <color name="blanco">#ffffff</color>
+
+    <color name="negro_">#000000</color>
+    <color name="negro_a">#222222</color>
+    <color name="negro_f">#252525</color>
+
+    <color name="gris_d">#424242</color>
+    <color name="gris_e">#484848</color>
+    <color name="gris_f">#4a4a4a</color>
+    <color name="gris_g">#717171</color>
+    <color name="gris_l">#757575</color>
+    <color name="gris_h">#767676</color>
+    <color name="gris_m">#949594</color>
+    <color name="gris_n">#ADADAD</color>
+    <color name="gris_i">#bbbbbb</color>
+    <color name="gris_s">#bcbcbc</color>
+    <color name="gris_v">#cccccc</color>
+    <color name="gris_t">#c7c7c7</color>
+    <color name="gris_a">#D6D6D6</color>
+    <color name="gris_j">#d8d8d8</color>
+    <color name="gris_k">#eeeeee</color>
+    <color name="gris_b">#EBEBEB</color>
+    <color name="gris_o">#ebebed</color>
+    <color name="gris_p">#e6e6e8</color>
+    <color name="gris_q">#e3e3e6</color>
+    <color name="gris_r">#dfdfe3</color>
+    <color name="gris_c">#F2F2F2</color>
+    <color name="gris_u">#f6f7fb</color>
+
+    <color name="azul_a">#2196f3</color>
+    <color name="azul_b">#0061d6</color>
+
+    <color name="verde_j">#1abc9c</color>
+    <color name="verde_i">#5efc82</color>
+    <color name="verde_h">#00c853</color>
+    <color name="verde_g">#009624</color>
+    <color name="verde_f">#00757A</color>
+    <color name="verde_a">#2B7274</color>
+    <color name="verde_b">#008489</color>
+    <color name="verde_c">#3d969a</color>
+    <color name="verde_d">#b4e0df</color>
+    <color name="verde_e">#b9f3f5</color>
+
+    <color name="amarillo_n">#ffb400</color>
+    <color name="dif_a">#3c415e</color>
+
+    <color name="rojo_a">#891651</color>
+    <color name="rojo_m">#5E212121</color>
+    <color name="rojo_g">#5E2121</color>
+    <color name="rojo_h">#b30328</color>
+    <color name="rojo_l">#ff0000</color>
+    <color name="rojo_i">#D81B60</color>
+    <color name="rojo_b">#c13a48</color>
+    <color name="rojo_c">#d43142</color>
+    <color name="rojo_d">#ff385c</color>
+    <color name="rojo_j">#ec4b51</color>
+    <color name="rojo_e">#db6b77</color>
+    <color name="rojo_k">#ff7f7d</color>
+    <color name="rojo_f">#f8a1a9</color>
+    <color name="rojo_n">#ffebee</color>
+
+    <color name="morado_a">#4a0072</color>
+    <color name="morado_b">#5c007a</color>
+    <color name="morado_c">#7b1fa2</color>
+    <color name="morado_d">#8e24aa</color>
+    <color name="morado_e">#ae52d4</color>
+    <color name="morado_f">#c158dc</color>
+
+
+    <color name="texto_claro_a">@color/rojo_n</color>
+
+
+
+    <color name="tv_selector_color">@color/verde_f</color>
+    <color name="topbar_text_color">@color/verde_f</color>
+    <color name="Fragment_Perfil_User_Name_textColor">@color/negro_</color>
+    <color name="Fragment_Perfil_User_short_textColor">@color/negro_</color>
+    <color name="top_bar_fragment_viajero_viajes_title_textColor">@color/negro_</color>
+    <color name="color_del_boton_de_reserva_show_contacto_info">@color/verde_f</color>
+
+    <color name="black_overlay">#66000000</color>
+
 </resources>

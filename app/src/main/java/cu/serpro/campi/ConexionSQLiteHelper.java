@@ -42,5 +42,18 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
   }
 
 
-
+    public void addfavorite(Integer idCampismo) {
+      SQLiteDatabase db = this.getWritableDatabase();
+      ContentValues values = new ContentValues();
+      values.put(utilidades.Camp_estado, 2);
+      long lid = db.update(utilidades.TABLA_CAMPISMOS, values, utilidades.Id_campismos+"="+ idCampismo,null);
+      db.close(); // Closing database connection
+    }
+    public void remfavorite(Integer idCampismo) {
+      SQLiteDatabase db = this.getWritableDatabase();
+      ContentValues values = new ContentValues();
+      values.put(utilidades.Camp_estado, 1);
+      long lid = db.update(utilidades.TABLA_CAMPISMOS, values, utilidades.Id_campismos+"="+ idCampismo,null);
+      db.close(); // Closing database connection
+    }
 }

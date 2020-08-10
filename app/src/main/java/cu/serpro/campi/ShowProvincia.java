@@ -81,10 +81,26 @@ public class ShowProvincia extends AppCompatActivity {
             }else{
                 while (cursor2.moveToNext()) {
                     nombreOficina.setText(cursor2.getString(1));
-                    emailOficina.setText("Email: "+ cursor2.getString(4));
-                    telefonoOficina.setText("Telefono: "+ cursor2.getString(5));
-                    ubicacionOficina.setText("Ubicacion: "+ cursor2.getString(3));
-                    direccionOficina.setText("Dirección:" + cursor2.getString(6));
+                    if(cursor2.getString(4).length() == 0){
+                        emailOficina.setVisibility(View.GONE);
+                    }else{
+                        emailOficina.setText("Email: "+ cursor2.getString(4));
+                    }
+                    if(cursor2.getString(5).length() == 0){
+                        telefonoOficina.setVisibility(View.GONE);
+                    }else{
+                        telefonoOficina.setText("Teléfono: "+ cursor2.getString(5));
+                    }
+                    if(cursor2.getString(3).length() == 0){
+                        ubicacionOficina.setVisibility(View.GONE);
+                    }else{
+                        ubicacionOficina.setText("Ubicación: "+ cursor2.getString(3));
+                    }
+                    if(cursor2.getString(6).length() == 0){
+                        direccionOficina.setVisibility(View.GONE);
+                    }else{
+                        direccionOficina.setText("Direccíon: "+ cursor2.getString(6));
+                    }
                 }
             }
         }catch (Exception e){}
@@ -119,7 +135,7 @@ public class ShowProvincia extends AppCompatActivity {
             adapterCampismosPopulares.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(), "Seleccion. " + listaCampismos.get(recyclerCampismosProvincias.getChildAdapterPosition(view)).getTitulo(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Seleccion. " + listaCampismos.get(recyclerCampismosProvincias.getChildAdapterPosition(view)).getTitulo(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(ShowProvincia.this, DetallesCampismo.class);
                     i.putExtra("idCampismo", listaCampismos.get(recyclerCampismosProvincias.getChildAdapterPosition(view)).getId());
                     i.putExtra("ddonde", 2);

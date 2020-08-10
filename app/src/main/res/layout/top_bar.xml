@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparente"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/location"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:background="@color/transparente"
+            android:layout_alignParentLeft="true"
+            android:drawableTint="@color/blanco"
+            android:tint="@color/blanco"
+            app:srcCompat="@drawable/ic_location_on_black_24dp"
+            tools:ignore="VectorDrawableCompat" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="20dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/blanco"
+            android:textSize="20dp"
+            android:paddingLeft="20dp"
+            android:layout_alignTop="@id/location"
+            android:layout_alignBottom="@id/boton_search"
+            android:layout_toStartOf="@id/boton_search"
+            android:layout_toEndOf="@id/location"
+            android:gravity="center_vertical"
+            android:text="Campi"
+            tools:ignore="RtlCompat" />
+
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/boton_search"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:padding="0dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:drawableTint="@color/blanco"
+            android:tint="@color/blanco"
+            android:layout_alignParentRight="true"
+            tools:ignore="VectorDrawableCompat"
+            app:srcCompat="@drawable/ic_search_black_24dp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
